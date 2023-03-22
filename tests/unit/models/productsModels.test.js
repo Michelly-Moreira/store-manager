@@ -1,20 +1,27 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { productsModels } = require('../../../models/products');
+const { productsModels }  = require('../../../src/models');
 
 const connection = require('../../../src/models/connection');
-const { products } = require('./mocks/passenger.model.mock');
+const { products } = require('../mocks/products.model.mock');
 
 describe('Testes de unidade do model de produtos', function () {
+  afterEach(sinon.restore); // reseta os dublês
+
   it('Recuperando a lista de produtos', async function () {
     // arrange
+    sinon.stub(connection, 'execute').resolves([products]);
     // act
+    const result = await productsModels.findAll();
     // assert
+    expect(result).to.be.deep.equal(products); 
   })
 
-  afterEach(function () {
-    sinon.restore();
-  });
+  it('Recuperando um produto através do seu id', async function () {
+    sinon.stub(connection, 'execute').resolves([[products[0]]]);
+    const result = await productsModels.findById(1);
+    expect(result).to.be.deep.equal(products[0]);// retorna array com primeiro item
+  })
 });
 
 // Caso esteja utilizando barrel não existe problema algum em usar a desestruturação, pois nesses casos você estará importando um objeto e não uma função.
