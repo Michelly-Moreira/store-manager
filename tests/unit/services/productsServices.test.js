@@ -27,6 +27,6 @@ describe('Verificando service de produtos', function () {
     const result = await productsServices.findById('a');
 
     expect(result.type).to.be.equal('PRODUCT_NOT_FOUND');
-    expect(result.message).to.be.equal('"Product not found"')
+    expect(result.message).to.be.equal('Product not found')
   })
 });

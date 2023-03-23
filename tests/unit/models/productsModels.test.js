@@ -22,6 +22,12 @@ describe('Verificando model de produtos', function () {
     const result = await productsModels.findById(1);
     expect(result).to.be.deep.equal(products[0]);// retorna array com primeiro item
   })
+// quem é new product?
+  it('cadastrando um produto', async function () {
+    sinon.stub(connection, 'execute').resolves([{ name: 'ProdutoX' }])
+    const result = await productsModels.createProduct(newProduct);
+    expect(result).to.equal('ProdutoX')
+  })
 });
 
 // Caso esteja utilizando barrel não existe problema algum em usar a desestruturação, pois nesses casos você estará importando um objeto e não uma função.
