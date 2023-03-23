@@ -6,8 +6,8 @@ const { expect } = chai;
 chai.use(sinonChai);
 
 const { productsServices } = require('../../../src/services');
-const { productsController } = require('../../../src/controllers');
-const { products } = require('../mocks/products.controller.mock');
+const { productsControllers } = require('../../../src/controllers');
+const { products } = require('../mocks/products.model.mock');
 
 describe('Verficando Controllers de produtos', function () {
   afterEach(sinon.restore);
@@ -15,7 +15,7 @@ describe('Verficando Controllers de produtos', function () {
   it('Listando os produtos', async function () {
     const res = {};
     const req = {};
-    const productsListMock = [products.allProductsMock];
+    const productsListMock = [products];
     
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
@@ -23,7 +23,7 @@ describe('Verficando Controllers de produtos', function () {
       .stub(productsServices, 'findAll')
       .resolves({ type: null, message: productsListMock });
 
-    await productsController.getAllProducts(req, res);
+    await productsControllers.getAllProducts(req, res);
 
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(productsListMock);
@@ -34,7 +34,7 @@ describe('Verficando Controllers de produtos', function () {
     const req = {
       params: { id: 1 },
     };
-    const productId = [products.productIdMock];
+    const productId = [products];
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
@@ -42,7 +42,7 @@ describe('Verficando Controllers de produtos', function () {
       .stub(productsServices, 'findById')
       .resolves({ type: null, message: productId });
     
-    await productsController.getProduct(req, res);
+    await productsControllers.getProduct(req, res);
 
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(productId);
