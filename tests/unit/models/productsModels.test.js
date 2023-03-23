@@ -5,7 +5,7 @@ const { productsModels }  = require('../../../src/models');
 const connection = require('../../../src/models/connection');
 const { products } = require('../mocks/products.model.mock');
 
-describe('Testes de unidade do model de produtos', function () {
+describe('Verificando model de produtos', function () {
   afterEach(sinon.restore); // reseta os dublês
 
   it('Recuperando a lista de produtos', async function () {

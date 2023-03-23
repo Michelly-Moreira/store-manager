@@ -1,4 +1,4 @@
-const products = [
+const allProductsMock = [
   {
     id: 1,
     name: 'Martelo de Thor',
@@ -11,9 +11,13 @@ const products = [
     id: 3,
     name: 'Escudo do Capitão América',
   }
-]
+];
+
+const productIdMock = { id: 1, ...allProductsMock };
 
 
+  
 module.exports = {
-  products,
-};
+  allProductsMock,
+  productIdMock,
+}
