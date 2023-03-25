@@ -7,10 +7,10 @@ const productMock = {
 const newProductMock = { id: 1, ...productMock };
 
 // Esse é o array que utilizei no teste da função findAll
-const productListMock = [newProductMock];
+const productsListMock = [newProductMock];
 
 module.exports = {
   productMock,
   newProductMock,
-  productListMock,
+  productsListMock,
 };

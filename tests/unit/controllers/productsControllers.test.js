@@ -7,7 +7,7 @@ chai.use(sinonChai);
 
 const { productsServices } = require('../../../src/services');
 const { productsControllers } = require('../../../src/controllers');
-const { productsListMock, newProductMock } = require('../mocks/productsControllersMock');
+const { productsListMock, newProductMock, productMock } = require('../mocks/productsControllersMock');
 
 describe('Verficando Controllers de produtos', function () {
 // arrange
@@ -45,7 +45,93 @@ describe('Verficando Controllers de produtos', function () {
     expect(res.json).to.have.been.calledWith(newProductMock);
   });
 
+  it('Ao passar um id que não existe deve retornar um erro', async function () {
+    const res = {};
+    const req = {
+      params: { id: 38 },
+    };
+// arrange
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon
+      .stub(productsServices, 'findById')
+      .resolves({ type: 'PRODUCT_NOT_FOUND', message: 'Product not found' });
+// act
+    await productsControllers.getProduct(req, res);
+//assert - avaiando se chamou res.status com o valor 404 e com a msgm esperada
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.status).to.have.been.calledWith('Product not found');
+
+  })
+
+  it('Cadastrando um produto', async function () {
+    const res = {}
+    const req = {
+      body: productMock,
+    }
+// arrange
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+
+    sinon
+      .stub(productsServices, 'createProduct')
+      .resolves({ type: null, message: newProductMock })
+// act
+    await productsControllers.createProduct(req, res)
+
+// assert: Asserção para garantir que o status retornado vai ser 201 e que o json é o objeto newProductMock.
+    expect(res.staus).to.have.been.calledWith(201);
+    expect(res.status).to.have.been.calledWith(newProductMock);
+  })
+
+  it('ao passar a chave name sem valor retornar um erro', async function () {
+    // Arrange
+    const res = {};
+    const req = {
+      body: { name: ' ' },
+    };
+
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    // Definindo o dublê do service retornando o contrato definido.
+    sinon
+      .stub(productsServices, 'createProduct')
+      .resolves({ type: 'NAME_IS_REQUIRED', message: 'name  is required' });
+
+    // Act
+    await productsControllers.createProduct(req, res)
+
+    // Assert
+    // Avaliando se chamou `res.status` com o valor 400
+    expect(res.status).to.have.been.calledWith(400); 
+    // Avaliando se chamou `res.status` com a mensagem esperada
+    expect(res.json).to.have.been.calledWith('name  is required');
+  });
+
+  it('Retorna um erro ao passar um nome com menos de 5 caracteres', async function () {
+// arrange
+    const res = {}
+    const req = {
+      body: { name: 'oil' },
+    };
+// O dublê de `res.status` e`res.json`
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+// Definimos um dublê para `productsServices.createProduct` para retornar o erro no contrato estabelecido na camada Service 
+    sinon
+      .stub(productsServices, 'createProduct')
+      .resolves({ type: 'INVALID_VALUE', message: 'name length must be at least 5 characters long' })
+    
+// act
+    await productsControllers.createProduct(req, res)
+
+// assert: Asserção para garantir que o status retornado vai ser 201 e que o json é o objeto newProductMock.
+    expect(res.staus).to.have.been.calledWith(422);
+    expect(res.status).to.have.been.calledWith('name length must be at least 5 characters long');
+  })
+
   afterEach(function () {
-     sinon.restore()
+    sinon.restore()
   });
 });
