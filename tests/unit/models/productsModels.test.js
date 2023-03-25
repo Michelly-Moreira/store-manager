@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { productsModels }  = require('../../../src/models');
 
 const connection = require('../../../src/models/connection');
-const { products } = require('../mocks/products.model.mock');
+const { products, newProduct } = require('../mocks/productsModelsMock');
 
 describe('Verificando model de produtos', function () {
   afterEach(sinon.restore); // reseta os dublês
@@ -22,11 +22,16 @@ describe('Verificando model de produtos', function () {
     const result = await productsModels.findById(1);
     expect(result).to.be.deep.equal(products[0]);// retorna array com primeiro item
   })
-// quem é new product?
+
   it('cadastrando um produto', async function () {
-    sinon.stub(connection, 'execute').resolves([{ name: 'ProdutoX' }])
+    sinon.stub(connection, 'execute').resolves([{ name: 'ProdutoX' }]);
     const result = await productsModels.createProduct(newProduct);
     expect(result).to.equal('ProdutoX')
+  })
+
+  it('cadastrando um produto com valores válidos', async function () {
+    sinon.stub(productsModels, 'createProduct').resolves([{ name: 'ProdutoX' }]);
+    sinon.stub(productsModels, 'findById').resolves(products[4]);
   })
 });
 

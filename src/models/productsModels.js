@@ -16,10 +16,10 @@ const findById = async (productId) => {
   return (product);
 };
 
-const createProduct = async (productName) => {
+const createProduct = async (product) => {
   const [{ name }] = await connection.execute(
     'INSERT INTO products (name) VALUES (?)',
-    [...Object.values(productName)],
+    [...Object.values(product)],
   );
   return (name);
 };
