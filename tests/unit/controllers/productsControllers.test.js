@@ -7,25 +7,22 @@ chai.use(sinonChai);
 
 const { productsServices } = require('../../../src/services');
 const { productsControllers } = require('../../../src/controllers');
-const { products } = require('../mocks/productsModelsMock');
-// const { productMock } = require('../../tests/unit/mocks/productsControllersMock');
+const { productsListMock, newProductMock } = require('../mocks/productsControllersMock');
 
 describe('Verficando Controllers de produtos', function () {
-  afterEach(sinon.restore);
-
+// arrange
   it('Listando os produtos', async function () {
     const res = {};
     const req = {};
-    const productsListMock = [products];
     
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon
       .stub(productsServices, 'findAll')
       .resolves({ type: null, message: productsListMock });
-
+// act
     await productsControllers.getAllProducts(req, res);
-
+// assert
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(productsListMock);// a função res.json deverá ser chamada com o array retornado pelo service
   });
@@ -35,17 +32,20 @@ describe('Verficando Controllers de produtos', function () {
     const req = {
       params: { id: 1 },
     };
-    const productId = [products];
-
+// arrange
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
     sinon
       .stub(productsServices, 'findById')
-      .resolves({ type: null, message: productId });
-    
+      .resolves({ type: null, message: newProductMock });
+// act
     await productsControllers.getProduct(req, res);
-
+// assert
     expect(res.status).to.have.been.calledWith(200);
-    expect(res.json).to.have.been.calledWith(productId);
+    expect(res.json).to.have.been.calledWith(newProductMock);
+  });
+
+  afterEach(function () {
+     sinon.restore()
   });
 });
