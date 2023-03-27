@@ -11,10 +11,10 @@ const validateNewProduct = (name) => {
   const { error } = addProductSchema.validate(name);
 
     if (error.message.includes('is required')) {
-      return { type: 'NAME_IS_REQUIRED', message: 'name  is required' };
+      return { type: 'NAME_IS_REQUIRED', message: '"name"  is required' };
     } if (error.message.includes('length') && name.length < 5) {
         return {
-          type: 'INVALID_VALUE', message: 'name length must be at least 5 characters long',
+          type: 'INVALID_VALUE', message: '"name" length must be at least 5 characters long',
         };
     }
     return { type: null, message: '' };
