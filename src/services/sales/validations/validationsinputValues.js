@@ -1,7 +1,7 @@
 const { addSalesSchema } = require('./schema');
 
 const validateNewSale = (productId, quantity) => {
-  const { error } = addSalesSchema.validate(productId, quantity);
+  const { error } = addSalesSchema.validate({ productId, quantity });
 
   if (error.message.includes('is required')) {
     return { type: 'PRODUCT_ID_IS_REQUIRED', message: 'productId  is required' };

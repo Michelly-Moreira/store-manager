@@ -1,4 +1,4 @@
-const salesServices = require('../../services/sales');
+const salesServices = require('../../services/products');
 const errorMap = require('../../utils/errorMap');
 
 const createSale = async (req, res) => {
@@ -8,4 +8,4 @@ const createSale = async (req, res) => {
   res.status(201).json(message);
 };
 
-module.exports = createSale;
+module.exports = { createSale };

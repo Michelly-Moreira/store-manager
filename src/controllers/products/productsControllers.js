@@ -1,5 +1,5 @@
-const productsServices = require('../services');
-const errorMap = require('../utils/errorMap'); // mapa relacionando erro com status code
+const productsServices = require('../../services/products');
+const errorMap = require('../../utils/errorMap'); // mapa relacionando erro com status code
 
 const getAllProducts = async (_req, res) => {
   const { type, message } = await productsServices.findAll();

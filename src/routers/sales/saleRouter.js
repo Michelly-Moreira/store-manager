@@ -1,8 +1,9 @@
 const express = require('express');
+const validateSale = require('../../middlewares/sale');
 const salesControllers = require('../../controllers/sales');
 
-const router = express.router();
+const router = express.Router();
 
-router.post('./', salesControllers.createSale);
+router.post('/', validateSale, salesControllers.createSale);
 
 module.exports = router;

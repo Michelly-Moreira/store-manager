@@ -3,6 +3,15 @@
 const snakeize = require('snakeize');
 const db = require('../connection');
 
+// as vendas enviadas devem ser salvas na tabela sales, por isso esta função
+const findById = async (id) => {
+  const [[sale]] = await db.execute(
+    'SELECT * FROM sales WHERE id = ?',
+    [id],
+  );
+  return sale;
+};
+
 const insert = async (sale) => {
 // transforma o nome das colunas, de snakeize para camelcase
   const columns = Object.keys(snakeize(sale)).join(', ');
@@ -21,4 +30,5 @@ const insert = async (sale) => {
 
 module.exports = {
   insert,
+  findById,
 };
