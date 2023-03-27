@@ -1,5 +1,3 @@
 const validationsInputValues = require('./validationsInputValues');
 
-module.exports = {
-  validationsInputValues,
-};
+module.exports = validationsInputValues;

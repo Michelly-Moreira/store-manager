@@ -1,4 +1,5 @@
 const express = require('express');
+const productsControllers = require('./controllers');
 const productRouter = require('./routers/productRouter');
 
 const app = express();
@@ -11,6 +12,8 @@ app.get('/', (_request, response) => {
 app.use(express.json());
 
 app.use('/products', productRouter);
+
+app.post('/', productsControllers.createProduct);
 // você pode registrar suas rotas normalmente, como o exemplo acima
 // você deve usar o arquivo index.js para executar sua aplicação 
 module.exports = app;

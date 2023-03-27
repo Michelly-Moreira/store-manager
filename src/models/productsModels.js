@@ -2,10 +2,15 @@
 const connection = require('./connection');
 
 const findAll = async () => {
-  const [result] = await connection.execute(
+ const [result] = await connection.execute(
     'SELECT * FROM products ORDER BY id ASC',
-  );
-  return (result);
+ );
+    const formattedRows = result.map((row) => {
+    const jsonString = JSON.stringify(row);
+    return JSON.parse(jsonString);
+  });
+  // console.log(result);
+  return formattedRows;
 };
 
 const findById = async (productId) => {
@@ -13,15 +18,18 @@ const findById = async (productId) => {
     'SELECT * FROM products WHERE id = ? ORDER BY id ASC',
     [productId],
   );
-  return (product);
+  return product;
 };
 
-const createProduct = async (product) => {
-  const [{ name }] = await connection.execute(
+const createProduct = async (name) => {
+  const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
+  const [{ insertId }] = await connection.execute(query, [name]);
+  /* const [{ insertId }] = await connection.execute(
     'INSERT INTO products (name) VALUES (?)',
-    [...Object.values(product)],
-  );
-  return (name);
+    [...Object.values(name)],
+  ); */
+  // console.log(insertId);
+  return insertId;
 };
 
 module.exports = {
