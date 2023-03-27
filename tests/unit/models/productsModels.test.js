@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { productsModels }  = require('../../../src/models');
+const productsModels  = require('../../../src/models');
 
 const connection = require('../../../src/models/connection');
 const { products, newProduct } = require('../mocks/productsModelsMock');
@@ -21,12 +21,6 @@ describe('Verificando model de produtos', function () {
     sinon.stub(connection, 'execute').resolves([[products[0]]]);
     const result = await productsModels.findById(1);
     expect(result).to.be.deep.equal(products[0]);// retorna array com primeiro item
-  })
-
-  it('cadastrando um produto', async function () {
-    sinon.stub(connection, 'execute').resolves([{ name: 'ProdutoX' }]);
-    const result = await productsModels.createProduct(newProduct);
-    expect(result).to.equal('ProdutoX')
   })
 
   it('cadastrando um produto com valores válidos', async function () {

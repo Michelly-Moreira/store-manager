@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { productsServices } = require('../../../src/services');
-const { productsModels } = require('../../../src/models');
+const productsServices = require('../../../src/services');
+const productsModels = require('../../../src/models');
 const { invalidValue, validName, allProducts, withoutName } = require('../mocks/productsServicesMock');
 
 describe('Verificando service de produtos', function () {
@@ -32,13 +32,13 @@ describe('Verificando service de produtos', function () {
   });
 });
 
-describe('Cadastro de um produto', function () {
+describe('Verificando service de cadastro de um produto', function () {
   afterEach(sinon.restore);
 
   it('Retorna um erro caso não haja valor na propriedade name', async function () {
     const result = await productsServices.createProduct(withoutName);
     expect(result.type).to.equal('NAME_IS_REQUIRED');
-    expect(result.message).to.be.equal('name  is required')
+    expect(result.message).to.be.deep.equal('name  is required')
   })
 
   it('Retorna um erro ao passar um nome com tamanho menor que 5', async function () {
