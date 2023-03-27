@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const productsServices = require('../../../src/services');
 const productsModels = require('../../../src/models');
-const { invalidValue, validName, allProducts, withoutName } = require('../mocks/productsServicesMock');
+const { invalidValue, validName, allProducts, withoutName } = require('../mocks/services/productsServicesMock');
 
 describe('Verificando service de produtos', function () {
   afterEach(sinon.restore);

@@ -7,9 +7,10 @@ chai.use(sinonChai);
 
 const productsServices = require('../../../src/services');
 const productsControllers = require('../../../src/controllers');
-const { productsListMock, newProductMock, productMock } = require('../mocks/productsControllersMock');
+const { productsListMock, newProductMock, productMock } = require('../mocks/controllers/productsControllersMock');
 
 describe('Verficando Controllers de produtos', function () {
+  afterEach(sinon.restore);
 // arrange
   it('Listando os produtos', async function () {
     const res = {};
@@ -61,7 +62,7 @@ describe('Verficando Controllers de produtos', function () {
     await productsControllers.getProduct(req, res);
 //assert - avaiando se chamou res.status com o valor 404 e com a msgm esperada
     expect(res.status).to.have.been.calledWith(404);
-    expect(res.status).to.have.been.calledWith('Product not found');
+    expect(res.json).to.have.been.calledWith({ message: 'Product not found'});
 
   })
 
@@ -81,8 +82,8 @@ describe('Verficando Controllers de produtos', function () {
     await productsControllers.createProduct(req, res)
 
 // assert: Asserção para garantir que o status retornado vai ser 201 e que o json é o objeto newProductMock.
-    expect(res.staus).to.have.been.calledWith(201);
-    expect(res.status).to.have.been.calledWith(newProductMock);
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith(newProductMock);
   })
 
   it('ao passar a chave name sem valor retornar um erro', async function () {
@@ -104,9 +105,9 @@ describe('Verficando Controllers de produtos', function () {
 
     // Assert
     // Avaliando se chamou `res.status` com o valor 400
-    expect(res.status).to.have.been.calledWith(400); 
+    expect(res.status).to.have.been.calledWith(400);
     // Avaliando se chamou `res.status` com a mensagem esperada
-    expect(res.json).to.have.been.calledWith('name  is required');
+    expect(res.json).to.have.been.calledWith({ message: 'name  is required' });
   });
 
   it('Retorna um erro ao passar um nome com menos de 5 caracteres', async function () {
@@ -127,11 +128,7 @@ describe('Verficando Controllers de produtos', function () {
     await productsControllers.createProduct(req, res)
 
 // assert: Asserção para garantir que o status retornado vai ser 201 e que o json é o objeto newProductMock.
-    expect(res.staus).to.have.been.calledWith(422);
-    expect(res.status).to.have.been.calledWith('name length must be at least 5 characters long');
+    expect(res.status).to.have.been.calledWith(422);
+    expect(res.json).to.have.been.calledWith({ message: 'name length must be at least 5 characters long' });
   })
-
-  afterEach(function () {
-    sinon.restore()
-  });
 });

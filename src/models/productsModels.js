@@ -5,13 +5,10 @@ const findAll = async () => {
  const [result] = await connection.execute(
     'SELECT * FROM products ORDER BY id ASC',
  );
-    const formattedRows = result.map((row) => {
-    const jsonString = JSON.stringify(row);
-    return JSON.parse(jsonString);
-  });
-  // console.log(result);
-  return formattedRows;
+  console.log(result);
+  return result;
 };
+// findAll();
 
 const findById = async (productId) => {
   const [[product]] = await connection.execute(
@@ -22,12 +19,10 @@ const findById = async (productId) => {
 };
 
 const createProduct = async (name) => {
-  const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
-  const [{ insertId }] = await connection.execute(query, [name]);
-  /* const [{ insertId }] = await connection.execute(
-    'INSERT INTO products (name) VALUES (?)',
-    [...Object.values(name)],
-  ); */
+const [{ insertId }] = await connection.execute(
+  'INSERT INTO StoreManager.products (name) VALUES (?)',
+  [name],
+);
   // console.log(insertId);
   return insertId;
 };

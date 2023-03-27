@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const productsModels  = require('../../../src/models');
 
 const connection = require('../../../src/models/connection');
-const { products, newProduct } = require('../mocks/productsModelsMock');
+const { products } = require('../mocks/models/productsModelsMock');
 
 describe('Verificando model de produtos', function () {
   afterEach(sinon.restore); // reseta os dublês
