@@ -5,8 +5,8 @@ const sinonChai = require('sinon-chai');
 const { expect } = chai;
 chai.use(sinonChai);
 
-const productsServices = require('../../../src/services');
-const productsControllers = require('../../../src/controllers');
+const productsServices = require('../../../src/services/products');
+const productsControllers = require('../../../src/controllers/products');
 const { productsListMock, newProductMock, productMock } = require('../mocks/controllers/productsControllersMock');
 
 describe('Verficando Controllers de produtos', function () {

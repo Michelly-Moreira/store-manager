@@ -1,8 +1,12 @@
-const { expect } = require('chai');
+const chai = require('chai');
+const { expect } = chai;
 const sinon = require('sinon');
-const productsServices = require('../../../src/services');
-const productsModels = require('../../../src/models');
+const chaiAsPromised = require('chai-as-promised');
+const productsServices = require('../../../src/services/products');
+const productsModels = require('../../../src/models/products');
 const { invalidValue, validName, allProducts, withoutName } = require('../mocks/services/productsServicesMock');
+
+chai.use(chaiAsPromised);
 
 describe('Verificando service de produtos', function () {
   afterEach(sinon.restore);
@@ -36,15 +40,17 @@ describe('Verificando service de cadastro de um produto', function () {
   afterEach(sinon.restore);
 
   it('Retorna um erro caso não haja valor na propriedade name', async function () {
-    const result = await productsServices.createProduct(withoutName);
-    expect(result.type).to.equal('NAME_IS_REQUIRED');
-    expect(result.message).to.be.deep.equal('name  is required')
+    await expect(productsServices.createProduct(withoutName)).to.be.rejectedWith({
+      message: 'name  is required',
+      statusCode: 400
+    });
   })
 
   it('Retorna um erro ao passar um nome com tamanho menor que 5', async function () {
-    const result = await productsServices.createProduct(invalidValue);
-    expect(result.type).to.equal('INVALID_VALUE');
-    expect(result.message).to.be.equal('name length must be at least 5 characters long')
+    await expect(productsServices.createProduct(invalidValue)).to.be.rejectedWith({
+      message: 'name length must be at least 5 characters long',
+      statusCode: 422
+    });
   });
 
   it('Retorna o id do produto cadastrado', async function () {
