@@ -13,5 +13,5 @@ module.exports = (req, res, next) => {
       return next({ status: 422, message: error.message });
     }
   }
-  return res.status(201).json({ message: sales });
+  next();
 };

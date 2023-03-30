@@ -17,8 +17,8 @@ const getProduct = async (req, res) => {
 const createProduct = async (req, res, next) => {
   try {
     const { name } = req.body;
-    const { message } = await productsServices.createProduct(name);
-    res.status(201).json({ message });
+    const message = await productsServices.createProduct(name);
+    res.status(201).json(message);
   } catch (error) { // trouxe o erro do throw
     next(error); // trouxe o middleware com o erro correspondente
   }

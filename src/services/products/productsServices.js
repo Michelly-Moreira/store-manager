@@ -22,6 +22,7 @@ const createProduct = async (name) => {
   const newProductId = await productsModels.createProduct(name); // cadastrando o produto
   const newProduct = await productsModels.findById(newProductId); // recuperando o produto cadastrado
   if (!newProduct) throw httpErrGenerator(404, 'Product not found');
+  return newProduct;
 };
 
 module.exports = {
