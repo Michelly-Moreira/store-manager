@@ -1,3 +1,3 @@
-const validateSale = require('./validateSale');
+const salesEmployeesValidation = require('./salesEmployeesValidation');
 
-module.exports = validateSale;
+module.exports = salesEmployeesValidation;

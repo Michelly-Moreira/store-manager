@@ -1,14 +1,21 @@
 const salesModels = require('../../models/sales');
-const validationsInputValues = require('./validations');
 
-const createSale = async (productId, quantity) => {
-  const error = validationsInputValues.validateNewSale(productId, quantity);
-  if (error.type) return error;
+const httpErrGenerator = (status, message) => ({ status, message });
 
-  const newSaleId = await salesModels.insert(productId, quantity);
-  const newSale = await salesModels.findById(newSaleId);
-
-  return { type: null, message: newSale };
+const createById = async (saleId) => {
+  const newProductId = await salesModels.insert(saleId); // cadastrando id e data da venda
+  const newProduct = await salesModels.findById(newProductId); // recuperando o que foi cadastrado
+  if (!newProduct.productId) throw httpErrGenerator(404, 'Sale not found');
 };
 
-module.exports = createSale;
+const createSale = async (sale) => {
+  const newSaleId = await salesModels.insert(sale);// cadastrando a sale
+  const newSale = await salesModels.createById(newSaleId);// recuperando a sale cadastrada
+  console.log(newSale);
+  if (!newSale.productId) throw httpErrGenerator(404, 'Product not found');
+};
+
+module.exports = {
+  createSale,
+  createById,
+};

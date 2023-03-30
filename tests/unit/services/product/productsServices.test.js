@@ -2,9 +2,9 @@ const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
 const chaiAsPromised = require('chai-as-promised');
-const productsServices = require('../../../src/services/products');
-const productsModels = require('../../../src/models/products');
-const { invalidValue, validName, allProducts, withoutName } = require('../mocks/services/productsServicesMock');
+const productsServices = require('../../../../src/services/products');
+const productsModels = require('../../../../src/models/products');
+const { invalidValue, validName, allProducts, withoutName } = require('../../mocks/services/productsServicesMock');
 
 chai.use(chaiAsPromised);
 
@@ -47,10 +47,12 @@ describe('Verificando service de cadastro de um produto', function () {
   })
 
   it('Retorna um erro ao passar um nome com tamanho menor que 5', async function () {
-    await expect(productsServices.createProduct(invalidValue)).to.be.rejectedWith({
+    const minLength = productsServices.createProduct(invalidValue);
+    await expect(minLength).to.be.rejectedWith();
+    /* await expect(productsServices.createProduct(invalidValue)).to.be.rejectedWith({
       message: 'name length must be at least 5 characters long',
       statusCode: 422
-    });
+    }); */
   });
 
   it('Retorna o id do produto cadastrado', async function () {

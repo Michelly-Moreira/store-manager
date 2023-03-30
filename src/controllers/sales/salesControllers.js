@@ -1,11 +1,26 @@
-const salesServices = require('../../services/products');
-const errorMap = require('../../utils/errorMap');
+const salesServices = require('../../services/sales');
 
-const createSale = async (req, res) => {
-  const { productId, quantity } = req.body;
-  const { type, message } = await salesServices.createProduct(productId, quantity);
-  if (type) return res.status(errorMap.mapError(type)).json({ message });
-  res.status(201).json(message);
+const createById = async (req, res, next) => {
+  try {
+    const saleId = req.body;
+    const message = await salesServices.createSale(saleId);
+    res.status(200).json(message);
+  } catch (error) { // trouxe o erro do throw
+    next(error); // trouxe o middleware com o erro correspondente
+  }
 };
 
-module.exports = { createSale };
+const createSale = async (req, res, next) => {
+  try {
+    const saleBody = req.body;
+    const message = await salesServices.createSale(saleBody);
+    res.status(201).json(message);
+  } catch (error) { // trouxe o erro do throw
+    next(error); // trouxe o middleware com o erro correspondente
+   }
+};
+
+module.exports = {
+  createSale,
+  createById,
+};

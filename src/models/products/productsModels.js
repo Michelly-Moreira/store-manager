@@ -5,7 +5,7 @@ const findAll = async () => {
  const [result] = await connection.execute(
     'SELECT * FROM products ORDER BY id ASC',
  );
-  console.log(result);
+  // console.log(result);
   return result;
 };
 // findAll();

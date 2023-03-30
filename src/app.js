@@ -3,6 +3,7 @@ const productsControllers = require('./controllers/products');
 const productRouter = require('./routers/products/productRouter');
 const salesControllers = require('./controllers/sales');
 const saleRouter = require('./routers/sales/saleRouter');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/sales', saleRouter);
 app.post('/', productsControllers.createProduct);
 
 app.post('/', salesControllers.createSale);
+app.use(errorHandler);
 // você pode registrar suas rotas normalmente, como o exemplo acima
 // você deve usar o arquivo index.js para executar sua aplicação 
 module.exports = app;
