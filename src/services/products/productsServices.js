@@ -1,6 +1,8 @@
 const productsModels = require('../../models/products');
 const validationsInputValues = require('./validations');
 
+const httpErrGenerator = (status, message) => ({ status, message });
+
 const findAll = async () => {
   const products = await productsModels.findAll();
   // console.log(products);
@@ -17,13 +19,9 @@ const findById = async (id) => {
 };
 
 const createProduct = async (name) => {
-  const error = validationsInputValues.validateNewProduct(name);
-  if (error.type) return error;
-  
   const newProductId = await productsModels.createProduct(name); // cadastrando o produto
   const newProduct = await productsModels.findById(newProductId); // recuperando o produto cadastrado
-
-  return { type: null, message: newProduct };
+  if (!newProduct) throw httpErrGenerator(404, 'Product not found');
 };
 
 module.exports = {

@@ -12,7 +12,7 @@ const createSale = async (sale) => {
   const newSaleId = await salesModels.insert(sale);// cadastrando a sale
   const newSale = await salesModels.createById(newSaleId);// recuperando a sale cadastrada
   console.log(newSale);
-  if (!newSale.productId) throw httpErrGenerator(404, 'Product not found');
+  if (!newSale) throw httpErrGenerator(404, 'Product not found');
 };
 
 module.exports = {
