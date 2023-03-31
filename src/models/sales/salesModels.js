@@ -7,22 +7,32 @@ const db = require('../connection');
 const createById = async () => {
   // console.log(id);
   const [{ sale }] = await db.execute(
-    'INSERT INTO sales (date) VALUES (?)',
-    [],
+    'INSERT INTO sales (date) VALUES (now())',
   );
   return sale;
 };
 
 const insert = async (sale) => {
-  console.log(sale);
   const [{ saleId }] = await db.execute(
     'INSERT INTO sales_products (productId, quantity) VALUE (?, ?)',
     [...Object.values(sale)],
   );
-  return saleId;
+  return saleId; 
 };
 
 module.exports = {
   insert,
   createById,
 };
+
+/* // Transforma o nome das colunas, de snakeize para camelCase
+  const columns = Object.keys(snakeize(sale)).join(', ');
+  // Cria a quantidade de interrogações de acordo com a quantidade de colunas
+  const placeholders = Object.keis(sale)
+    .map((_key) => '?')
+    .join(', ');
+  
+  const [saleId] = await db.execute(
+    `INSERT INTO sales_products (${columns}) VALUES (${placeholders})`,
+    [...Object.values(sale)],
+  ); */
