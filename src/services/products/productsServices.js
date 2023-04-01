@@ -1,21 +1,17 @@
 const productsModels = require('../../models/products');
-const validationsInputValues = require('./validations');
 
 const httpErrGenerator = (status, message) => ({ status, message });
 
 const findAll = async () => {
   const products = await productsModels.findAll();
-  // console.log(products);
-  return { type: null, message: products };
+  if (!products) throw httpErrGenerator(404, 'Product not found');
+  return products;
 };
 // findAll();
 const findById = async (id) => {
-  const error = validationsInputValues.validateId(id);
-  if (error.type) return error;
-
   const product = await productsModels.findById(id);
-  if (product) return { type: null, message: product };
-  return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  if (!product) throw httpErrGenerator(404, 'Product not found');
+  return product;
 };
 
 const createProduct = async (name) => {
