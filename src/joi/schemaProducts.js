@@ -9,4 +9,4 @@ const addProductSchema = joi.object({
   'name.min': '{{#label}} length must be at least 5 characters long',
 });
 
-module.exports = { addProductSchema, listById };
+module.exports = { addProductSchema };
