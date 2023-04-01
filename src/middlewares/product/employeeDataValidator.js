@@ -1,6 +1,6 @@
 // middleware do joi
 // middleware do joi
-const addProductSchema = require('../../joi/schemaProducts');
+const { addProductSchema } = require('../../joi/schemaProducts');
 
 module.exports = (req, res, next) => {
   const sale = req.body;
