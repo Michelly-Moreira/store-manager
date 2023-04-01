@@ -17,7 +17,21 @@ const createSale = async (sale) => {
   return newSale;
 };
 
+const findAll = async () => {
+  const sales = await salesModels.findAll();
+  if (!sales) throw httpErrGenerator(404, 'Sale not found');
+  return sales;
+};
+// findAll();
+const findById = async (id) => {
+  const sale = await salesModels.findById(id);
+  if (sale.length === 0) throw httpErrGenerator(404, 'Sale not found');
+  return sale;
+};
+
 module.exports = {
   createSale,
   createById,
+  findAll,
+  findById,
 };

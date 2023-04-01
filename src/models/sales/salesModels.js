@@ -19,9 +19,36 @@ const insert = async (sale) => {
   return saleId; 
 };
 
+const findAll = async () => {
+  const [result] = await db.execute(
+    `SELECT p.sale_id AS saleId, s.date, p.product_Id AS productId, p.quantity 
+     FROM sales AS s
+     JOIN sales_products AS p
+     ON s.id = p.sale_id
+     ORDER BY id ASC;`,
+  );
+  // console.log(result);
+  return result;
+};
+// findAll();
+
+const findById = async (saleId) => {
+  const [sale] = await db.execute(
+    `SELECT s.date, p.product_Id AS productId, p.quantity 
+     FROM sales AS s
+     JOIN sales_products AS p
+     ON s.id = p.sale_id
+     WHERE s.id = ?
+     ORDER BY id ASC;`,
+    [saleId],
+  );
+  return sale;
+};
 module.exports = {
   insert,
   createById,
+  findAll,
+  findById,
 };
 
 /* // Transforma o nome das colunas, de snakeize para camelCase
