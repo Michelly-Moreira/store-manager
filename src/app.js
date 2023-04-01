@@ -12,15 +12,14 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use(express.json());
+app.use(express.json()); // middleware que converte o buffy pra json
 
 app.use('/products', productRouter);
 app.use('/sales', saleRouter);
 
 app.post('/', productsControllers.createProduct);
-
 app.post('/', salesControllers.createSale);
+
 app.use(errorHandler);
-// você pode registrar suas rotas normalmente, como o exemplo acima
-// você deve usar o arquivo index.js para executar sua aplicação 
+
 module.exports = app;

@@ -1,3 +1,7 @@
 const validationsInputValues = require('./validationsInputValues');
+const schema = require('../../../joi/schemaProducts');
 
-module.exports = validationsInputValues;
+module.exports = {
+  validationsInputValues,
+  schema,
+};

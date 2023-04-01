@@ -1,4 +1,4 @@
-// tratamento de erro genérico
+// middleware de tratamento de erro genérico
 const errorHandler = (error, _req, res, _next) => {
   // console.log(error)
   if (error.status) {

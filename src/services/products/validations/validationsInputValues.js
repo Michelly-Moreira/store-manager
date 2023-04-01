@@ -1,5 +1,5 @@
 // retorna do service para o controler
-const { idProduct } = require('./schema');
+const { idProduct } = require('../../../joi/schemaProducts');
 
 const validateId = (id) => {
   const { error } = idProduct.validate(id);

@@ -1,5 +1,6 @@
+// validação de joi para array
 const Joi = require('joi');
-const { addSalesSchema } = require('../../services/sales/validations/schema');
+const { addSalesSchema } = require('../../joi/schemaSale');
 
 module.exports = (req, res, next) => {
   const sales = req.body;

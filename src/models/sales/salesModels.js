@@ -5,7 +5,6 @@ const db = require('../connection');
 
 // as vendas enviadas devem ser salvas na tabela sales, por isso esta função
 const createById = async () => {
-  // console.log(id);
   const [{ sale }] = await db.execute(
     'INSERT INTO sales (date) VALUES (now())',
   );

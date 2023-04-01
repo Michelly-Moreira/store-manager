@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { addProductSchema } = require('../../services/products/validations/schema');
+const { addProductSchema } = require('../../joi/schemaProducts');
 
 module.exports = (req, res, next) => {
   const products = req.body;
