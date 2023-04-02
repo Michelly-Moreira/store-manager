@@ -27,10 +27,8 @@ const findAll = async () => {
      ON s.id = p.sale_id
      ORDER BY id ASC;`,
   );
-  // console.log(result);
   return result;
 };
-// findAll();
 
 const findById = async (saleId) => {
   const [sale] = await db.execute(
@@ -44,6 +42,7 @@ const findById = async (saleId) => {
   );
   return sale;
 };
+
 module.exports = {
   insert,
   createById,

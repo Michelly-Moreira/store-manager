@@ -21,8 +21,16 @@ const createProduct = async (name) => {
   return newProduct;
 };
 
+const setById = async (id, name) => {
+  const product = await productsModels.setById(id, name);
+  // const newValue = await productsModels.findById(product); // recuperando o produto atualizado
+  if (!product) throw httpErrGenerator(404, 'Product not found');
+  return product;
+};
+
 module.exports = {
   findAll,
   findById,
   createProduct,
+  setById,
 };
