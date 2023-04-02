@@ -32,9 +32,9 @@ const createProduct = async (req, res, next) => {
 
 const setByUpdate = async (req, res, next) => {
   try {
-    const { id } = req.params;
     const { name } = req.body;
-    const message = await productsServices.setById(id, name);
+    const { id } = req.params;
+    const message = await productsServices.setById(name, id);
     return res.status(200).json(message);
   } catch (error) { // trouxe o erro do throw
     next(error); // trouxe o middleware com o erro correspondente

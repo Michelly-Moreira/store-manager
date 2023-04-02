@@ -21,11 +21,15 @@ const createProduct = async (name) => {
   return newProduct;
 };
 
-const setById = async (id, name) => {
-  const product = await productsModels.setById(id, name);
+const setById = async (name, id) => {
+  await findById(id);
+  const product = await productsModels.setById(name, id);
   // const newValue = await productsModels.findById(product); // recuperando o produto atualizado
   if (!product) throw httpErrGenerator(404, 'Product not found');
-  return product;
+  return {
+    id,
+    name,
+  };
 };
 
 module.exports = {

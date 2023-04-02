@@ -1,5 +1,5 @@
 const salesModels = require('../../models/sales');
-// const productsModels = require('../../models/products');
+const salesProductsModels = require('../../models/salesProducts');
 
 const httpErrGenerator = (status, message) => ({ status, message });
 
@@ -10,11 +10,18 @@ const createById = async (saleId) => {
   return newSaleDate;
 };
 
-const createSale = async (sale) => {
-  const newSaleId = await salesModels.insert(sale);// cadastrando a sale
-  const newSale = await salesModels.createById(newSaleId);// recuperando a sale cadastrada
-  if (!newSale) throw httpErrGenerator(404, 'Product not found');
-  return newSale;
+const createSale = async (sales) => {
+  const newSaleId = await salesModels.createById(); // cadastrando a venda
+  const insertProduct = sales.map(async (sale) => { // inserindo as vendas na tabela de vendas dos produtos
+    const newSale = await salesProductsModels.insert(sale, newSaleId);
+    if (!newSale) throw httpErrGenerator(404, 'Product not found');
+    return newSale;
+  });
+  await Promise.all(insertProduct);
+  return {
+    id: newSaleId,
+    itemsSold: sales,
+  };
 };
 
 const findAll = async () => {
