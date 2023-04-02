@@ -41,9 +41,20 @@ const setByUpdate = async (req, res, next) => {
   }
 };
 
+const remove = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await productsServices.remove(id);
+    return res.status(204).end();
+  } catch (error) { // trouxe o erro do throw
+    next(error); // trouxe o middleware com o erro correspondente
+  } 
+};
+
 module.exports = {
   getAllProducts,
   getProduct,
   createProduct,
   setByUpdate,
+  remove,
 };
