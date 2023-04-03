@@ -10,7 +10,7 @@ const createById = async (req, res, next) => {
   }
 };
 
-const createSale = async (req, res, next) => {
+  const createSale = async (req, res, next) => {
   try {
     const saleBody = req.body;
     const message = await salesServices.createSale(saleBody);

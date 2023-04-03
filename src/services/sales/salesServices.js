@@ -1,5 +1,5 @@
 const salesModels = require('../../models/sales');
-const salesProductsModels = require('../../models/salesProducts');
+// const salesProductsModels = require('../../models/salesProducts');
 
 const httpErrGenerator = (status, message) => ({ status, message });
 
@@ -10,8 +10,11 @@ const createById = async (saleId) => {
   return newSaleDate;
 };
 
-const createSale = async (sales) => {
-  const newSaleId = await salesModels.createById(); // cadastrando a venda
+// const createSale = async (sales) => {
+  /* sales.map(async({ productId }) => {
+    const validation = await productsModels.findById(productId);
+    if (!validation) throw httpErrGenerator(404, 'Product not found'); */
+  /* const newSaleId = await salesModels.createById(); // cadastrando a venda
   const insertProduct = sales.map(async (sale) => { // inserindo as vendas na tabela de vendas dos produtos
     const newSale = await salesProductsModels.insert(sale, newSaleId);
     if (!newSale) throw httpErrGenerator(404, 'Product not found');
@@ -22,7 +25,7 @@ const createSale = async (sales) => {
     id: newSaleId,
     itemsSold: sales,
   };
-};
+}; */
 
 const findAll = async () => {
   const sales = await salesModels.findAll();
@@ -37,7 +40,6 @@ const findById = async (id) => {
 };
 
 module.exports = {
-  createSale,
   createById,
   findAll,
   findById,
