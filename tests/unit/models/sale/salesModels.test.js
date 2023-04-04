@@ -8,10 +8,19 @@ const { sales } = require('../../mocks/models/sale/salesModelsMock');
 describe('Verificando model de vendas', function () {
   afterEach(sinon.restore); // reseta os dublês
 
-  it('cadastrando uma venda', async function () {
-  /*   const firstSale = { productId: 1, quantity: 1 }
-    sinon.stub(productsModels, 'createProduct').resolves(firstSale);
-    sinon.stub(productsModels, 'findById').resolves(sales[0]); */
+  it('Recuperando uma sale através do seu id', async function () {
+    sinon.stub(connection, 'execute').resolves([sales[0]]);
+    const result = await salesModels.findById(1);
+    expect(result).to.be.deep.equal(sales[0]);// retorna array com primeiro item
+  })
+   
+  it('Recuperando a lista de vendas', async function () {
+    // arrange
+    sinon.stub(connection, 'execute').resolves([sales]);
+    // act
+    const result = await salesModels.findAll();
+    // assert
+    expect(result).to.be.deep.equal(sales);
   })
 });
 
