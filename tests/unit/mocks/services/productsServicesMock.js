@@ -9,9 +9,21 @@ const allProducts = [
   },
 ];
 
+const all = [
+{
+    id: 1,
+    name: "Martelo de Thor"
+  },
+  {
+    id: 2,
+    name: "colher da mulher maravilha"
+  }
+]
+
 module.exports = {
   validName,
   invalidValue,
   withoutName,
   allProducts,
+  all,
 };

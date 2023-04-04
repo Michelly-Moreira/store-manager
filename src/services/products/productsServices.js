@@ -8,7 +8,7 @@ const findAll = async () => {
   if (!products) throw httpErrGenerator(404, productNotFound);
   return products;
 };
-// findAll();
+
 const findById = async (id) => {
   const product = await productsModels.findById(id);
   if (!product) throw httpErrGenerator(404, productNotFound);

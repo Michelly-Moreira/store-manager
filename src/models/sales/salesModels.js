@@ -11,14 +11,13 @@ const createById = async () => {
   return sale;
 };
 
-/* Primeira forma como fiz a função de inserir vendas
   const insert = async (sale) => {
   const [{ saleId }] = await db.execute(
     'INSERT INTO sales_products (sale_id, product_id, quantity) VALUE (?, ?, ?)',
     [...Object.values(sale)],
   );
   return saleId; 
-}; */
+}; 
 
 /* outra forma que tentei fazer pra ver se conseguia cadastrar a venda com sucesso
   const insert = async (id, sale) => {
@@ -54,7 +53,7 @@ const findById = async (saleId) => {
 };
 
 module.exports = {
-  // insert,
+  insert,
   createById,
   findAll,
   findById,
