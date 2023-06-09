@@ -22,6 +22,11 @@ describe('Verificando model de vendas', function () {
     // assert
     expect(result).to.be.deep.equal(sales);
   })
+/* 
+  it('Recupero a data e a hora da venda', async function () {
+    sinon.stub(connection, 'execute').resolves()
+
+  }) */
 });
 
 // Caso esteja utilizando barrel não existe problema algum em usar a desestruturação, pois nesses casos você estará importando um objeto e não uma função.

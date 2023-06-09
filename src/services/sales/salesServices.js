@@ -12,11 +12,6 @@ const createById = async (saleId) => {
 };
 
   const createSale = async (sales) => {
-    /* const validation = await Promise.all(sales.map(({
-      productId }) => productsModels.findById(productId)));
-    console.log(validation);
-    if (!validation) throw httpErrGenerator(404, 'Product not found'); */
-
   const newSaleId = await salesModels.createById(); // cadastrando a venda
   const insertProduct = sales.map(async (sale) => { // inserindo as vendas na tabela de vendas dos produtos
   const newSale = await salesProductsModels.insert(sale, newSaleId);
